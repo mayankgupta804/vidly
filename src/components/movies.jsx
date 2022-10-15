@@ -1,18 +1,9 @@
 import React, { Component } from "react";
-import { getMovies } from "../services/fakeMovieService";
+import Like from "./like";
 
 class Movies extends Component {
-  state = {
-    movies: getMovies(),
-  };
-
-  handleDelete = (movie) => {
-    const movies = this.state.movies.filter((m) => m._id !== movie._id);
-    this.setState({ movies });
-  };
-
   render() {
-    const { length: count } = this.state.movies;
+    const { length: count } = this.props.movies;
 
     return (
       <React.Fragment>
@@ -29,18 +20,22 @@ class Movies extends Component {
                   <th scope="col">Stock</th>
                   <th scope="col">Rate</th>
                   <th scope="col"></th>
+                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
-                {this.state.movies.map((movie) => (
+                {this.props.movies.map((movie) => (
                   <tr key={movie._id}>
                     <td>{movie.title}</td>
                     <td>{movie.genre.name}</td>
                     <td>{movie.numberInStock}</td>
                     <td>{movie.dailyRentalRate}</td>
                     <td>
+                      <Like />
+                    </td>
+                    <td>
                       <button
-                        onClick={() => this.handleDelete(movie)}
+                        onClick={() => this.props.onDelete(movie)}
                         type="button"
                         className="btn btn-danger btn-sm"
                       >
