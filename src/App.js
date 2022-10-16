@@ -8,6 +8,14 @@ class App extends Component {
     movies: getMovies(),
   };
 
+  handleLike = (movie) => {
+    const movies = [...this.state.movies];
+    const index = movies.indexOf(movie);
+    movies[index] = { ...movie };
+    movies[index].liked = movies[index].liked ? false : true;
+    this.setState({ movies });
+  };
+
   handleDelete = (movie) => {
     const movies = this.state.movies.filter((m) => m._id !== movie._id);
     this.setState({ movies });
@@ -16,7 +24,11 @@ class App extends Component {
   render() {
     return (
       <main className="container">
-        <Movies movies={this.state.movies} onDelete={this.handleDelete}/>
+        <Movies
+          movies={this.state.movies}
+          onLike={this.handleLike}
+          onDelete={this.handleDelete}
+        />
       </main>
     );
   }
