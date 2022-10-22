@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Like from "./common/like";
+import Pagination from "./common/pagination";
 
 class Movies extends Component {
   render() {
@@ -49,6 +50,11 @@ class Movies extends Component {
                 ))}
               </tbody>
             </table>
+            <Pagination
+              itemsCount={count}
+              pageSize={this.props.pageSize}
+              onPageChange={() => this.props.onPageChange}
+            />
           </>
         )}
       </React.Fragment>

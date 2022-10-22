@@ -6,6 +6,7 @@ import Movies from "./components/movies";
 class App extends Component {
   state = {
     movies: getMovies(),
+    pageSize: 9,
   };
 
   handleLike = (movie) => {
@@ -21,6 +22,10 @@ class App extends Component {
     this.setState({ movies });
   };
 
+  handlePageChange = (page) => {
+    console.log("Page number: ", page)
+  }
+
   render() {
     return (
       <main className="container">
@@ -28,6 +33,8 @@ class App extends Component {
           movies={this.state.movies}
           onLike={this.handleLike}
           onDelete={this.handleDelete}
+          pageSize={this.state.pageSize}
+          onPageChange={this.handlePageChange}
         />
       </main>
     );
