@@ -5,7 +5,8 @@ import Pagination from "./common/pagination";
 class Movies extends Component {
   render() {
     const { length: count } = this.props.movies;
-
+    const { pageSize, currentPage, onPageChange, onLike, movies, onDelete } = this.props;
+    
     return (
       <React.Fragment>
         {count === 0 ? (
@@ -25,7 +26,7 @@ class Movies extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.movies.map((movie) => (
+                {movies.map((movie) => (
                   <tr key={movie._id}>
                     <td>{movie.title}</td>
                     <td>{movie.genre.name}</td>
@@ -34,12 +35,12 @@ class Movies extends Component {
                     <td>
                       <Like
                         liked={movie.liked}
-                        onClick={() => this.props.onLike(movie)}
+                        onClick={() => onLike(movie)}
                       />
                     </td>
                     <td>
                       <button
-                        onClick={() => this.props.onDelete(movie)}
+                        onClick={() => onDelete(movie)}
                         type="button"
                         className="btn btn-danger btn-sm"
                       >
@@ -52,8 +53,9 @@ class Movies extends Component {
             </table>
             <Pagination
               itemsCount={count}
-              pageSize={this.props.pageSize}
-              onPageChange={() => this.props.onPageChange}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={onPageChange}
             />
           </>
         )}
