@@ -10,6 +10,7 @@ class App extends Component {
     genres: [...new Set(getMovies().map((movie) => movie.genre.name))],
     currentPage: 1,
     pageSize: 4,
+    currentGenre: "All Genres",
   };
 
   handleLike = (movie) => {
@@ -30,8 +31,17 @@ class App extends Component {
   };
 
   handleGenreChange = (genre) => {
-    const moviesInGenre = this.state.allMovies.filter((m) => m.genre.name === genre);
-    this.setState({ movies: moviesInGenre });
+    if (genre === "All Genres") {
+      this.setState({
+        movies: this.state.allMovies,
+        currentGenre: "All Genres",
+      });
+      return;
+    }
+    const moviesInGenre = this.state.allMovies.filter(
+      (m) => m.genre.name === genre
+    );
+    this.setState({ movies: moviesInGenre, currentGenre: genre });
   };
 
   render() {
@@ -46,6 +56,7 @@ class App extends Component {
           onPageChange={this.handlePageChange}
           currentPage={this.state.currentPage}
           onGenreChange={this.handleGenreChange}
+          currentGenre={this.state.currentGenre}
         />
       </main>
     );
