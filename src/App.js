@@ -6,6 +6,8 @@ import Movies from "./components/movies";
 class App extends Component {
   state = {
     movies: getMovies(),
+    allMovies: getMovies(),
+    genres: [...new Set(getMovies().map((movie) => movie.genre.name))],
     currentPage: 1,
     pageSize: 4,
   };
@@ -27,16 +29,23 @@ class App extends Component {
     this.setState({ currentPage: page });
   };
 
+  handleGenreChange = (genre) => {
+    const moviesInGenre = this.state.allMovies.filter((m) => m.genre.name === genre);
+    this.setState({ movies: moviesInGenre });
+  };
+
   render() {
     return (
       <main className="container">
         <Movies
           movies={this.state.movies}
+          genres={this.state.genres}
           onLike={this.handleLike}
           onDelete={this.handleDelete}
           pageSize={this.state.pageSize}
           onPageChange={this.handlePageChange}
           currentPage={this.state.currentPage}
+          onGenreChange={this.handleGenreChange}
         />
       </main>
     );

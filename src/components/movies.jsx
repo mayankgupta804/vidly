@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Like from "./common/like";
 import Pagination from "./common/pagination";
+import ListGroup from "./common/listgroup";
 import { paginate } from "../utils/paginate";
 
 class Movies extends Component {
@@ -12,13 +13,16 @@ class Movies extends Component {
       onPageChange,
       onLike,
       onDelete,
+      onGenreChange,
       movies: allMovies,
+      genres,
     } = this.props;
 
     const movies = paginate(allMovies, currentPage, pageSize);
 
     return (
       <React.Fragment>
+        <ListGroup genres={genres} onGenreChange={onGenreChange} />
         {count === 0 ? (
           <p>There are no movies in the database.</p>
         ) : (
