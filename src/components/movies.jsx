@@ -1,12 +1,22 @@
 import React, { Component } from "react";
 import Like from "./common/like";
 import Pagination from "./common/pagination";
+import { paginate } from "../utils/paginate";
 
 class Movies extends Component {
   render() {
     const { length: count } = this.props.movies;
-    const { pageSize, currentPage, onPageChange, onLike, movies, onDelete } = this.props;
-    
+    const {
+      pageSize,
+      currentPage,
+      onPageChange,
+      onLike,
+      onDelete,
+      movies: allMovies,
+    } = this.props;
+
+    const movies = paginate(allMovies, currentPage, pageSize);
+
     return (
       <React.Fragment>
         {count === 0 ? (
@@ -33,10 +43,7 @@ class Movies extends Component {
                     <td>{movie.numberInStock}</td>
                     <td>{movie.dailyRentalRate}</td>
                     <td>
-                      <Like
-                        liked={movie.liked}
-                        onClick={() => onLike(movie)}
-                      />
+                      <Like liked={movie.liked} onClick={() => onLike(movie)} />
                     </td>
                     <td>
                       <button
