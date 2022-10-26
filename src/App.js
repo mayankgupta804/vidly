@@ -1,17 +1,21 @@
 import "./App.css";
 import React, { Component } from "react";
 import { getMovies } from "./services/fakeMovieService";
+import { getGenres } from "./services/fakeGenreService";
 import Movies from "./components/movies";
 
 class App extends Component {
   state = {
-    movies: getMovies(),
-    allMovies: getMovies(),
-    genres: [...new Set(getMovies().map((movie) => movie.genre.name))],
+    movies: [],
+    genres: [],
     currentPage: 1,
     pageSize: 4,
-    currentGenre: "All Genres",
   };
+
+  componentDidMount() {
+    const genres = [{ name: "All Genres", _id: "all-genres" }, ...getGenres()];
+    this.setState({ movies: getMovies(), genres });
+  }
 
   handleLike = (movie) => {
     const movies = [...this.state.movies];
@@ -31,17 +35,7 @@ class App extends Component {
   };
 
   handleGenreChange = (genre) => {
-    if (genre === "All Genres") {
-      this.setState({
-        movies: this.state.allMovies,
-        currentGenre: "All Genres",
-      });
-      return;
-    }
-    const moviesInGenre = this.state.allMovies.filter(
-      (m) => m.genre.name === genre
-    );
-    this.setState({ movies: moviesInGenre, currentGenre: genre });
+    this.setState({ selectedGenre: genre, currentPage: 1 });
   };
 
   render() {
@@ -55,8 +49,8 @@ class App extends Component {
           pageSize={this.state.pageSize}
           onPageChange={this.handlePageChange}
           currentPage={this.state.currentPage}
-          onGenreChange={this.handleGenreChange}
-          currentGenre={this.state.currentGenre}
+          onGenreSelect={this.handleGenreChange}
+          selectedGenre={this.state.selectedGenre}
         />
       </main>
     );
