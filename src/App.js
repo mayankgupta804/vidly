@@ -10,6 +10,7 @@ class App extends Component {
     genres: [],
     currentPage: 1,
     pageSize: 4,
+    sortColumn: { path: "title", order: "asc" },
   };
 
   componentDidMount() {
@@ -38,6 +39,17 @@ class App extends Component {
     this.setState({ selectedGenre: genre, currentPage: 1 });
   };
 
+  handleSort = (path) => {
+    const sortColumn = { ...this.state.sortColumn };
+    if (sortColumn.path === path)
+      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
+    else {
+      sortColumn.path = path;
+      sortColumn.order = "asc";
+    }
+    this.setState({ sortColumn });
+  };
+
   render() {
     return (
       <main className="container">
@@ -51,6 +63,8 @@ class App extends Component {
           currentPage={this.state.currentPage}
           onGenreSelect={this.handleGenreChange}
           selectedGenre={this.state.selectedGenre}
+          onSort={this.handleSort}
+          sortColumn={this.state.sortColumn}
         />
       </main>
     );
