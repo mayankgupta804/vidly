@@ -18,8 +18,8 @@ class Movies extends Component {
       movies: allMovies,
       genres,
       selectedGenre,
-      onSort,
       sortColumn,
+      onSort,
     } = this.props;
 
     const filtered =
@@ -48,6 +48,7 @@ class Movies extends Component {
               <p>Showing {filtered.length} movies in the database.</p>
               <MoviesTable
                 movies={movies}
+                sortColumn={sortColumn}
                 onDelete={onDelete}
                 onLike={onLike}
                 onSort={onSort}
