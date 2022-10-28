@@ -6,6 +6,26 @@ import MoviesTable from "./moviesTable";
 import _ from "lodash";
 
 class Movies extends Component {
+  getPagedData = () => {
+    const {
+      pageSize,
+      currentPage,
+      movies: allMovies,
+      selectedGenre,
+      sortColumn,
+    } = this.props;
+    const filtered =
+      selectedGenre && selectedGenre._id
+        ? allMovies.filter((movie) => movie.genre._id === selectedGenre._id)
+        : allMovies;
+
+    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+
+    const movies = paginate(sorted, currentPage, pageSize);
+
+    return { totalCount: filtered.length, data: movies };
+  };
+
   render() {
     const { length: count } = this.props.movies;
     const {
@@ -22,14 +42,13 @@ class Movies extends Component {
       onSort,
     } = this.props;
 
-    const filtered =
-      selectedGenre && selectedGenre._id
-        ? allMovies.filter((movie) => movie.genre._id === selectedGenre._id)
-        : allMovies;
-
-    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
-
-    const movies = paginate(sorted, currentPage, pageSize);
+    const { totalCount, data: movies } = this.getPagedData(
+      selectedGenre,
+      allMovies,
+      sortColumn,
+      currentPage,
+      pageSize
+    );
 
     return (
       <div className="row">
@@ -45,7 +64,7 @@ class Movies extends Component {
             <p>There are no movies in the database.</p>
           ) : (
             <>
-              <p>Showing {filtered.length} movies in the database.</p>
+              <p>Showing {totalCount} movies in the database.</p>
               <MoviesTable
                 movies={movies}
                 sortColumn={sortColumn}
@@ -54,7 +73,7 @@ class Movies extends Component {
                 onSort={onSort}
               />
               <Pagination
-                itemsCount={filtered.length}
+                itemsCount={totalCount}
                 pageSize={pageSize}
                 currentPage={currentPage}
                 onPageChange={onPageChange}
