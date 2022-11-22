@@ -55,38 +55,39 @@ class App extends Component {
       { name: "Customers", path: "/customers" },
     ];
     return (
-      <main className="container">
+      <>
         <Navbar menuItems={menuItems} />
-        <div className="content">
-          <Switch>
-            <Redirect from="/movies" to="/" />
-            <Route path="/customers" component={Customers} />
-            <Route path="/rentals" component={Rentals} />
-            <Route path="/not-found" component={NotFound} />
-            <Route
-              exact
-              path="/"
-              render={(props) => (
-                <Movies
-                  movies={this.state.movies}
-                  genres={this.state.genres}
-                  onLike={this.handleLike}
-                  onDelete={this.handleDelete}
-                  pageSize={this.state.pageSize}
-                  onPageChange={this.handlePageChange}
-                  currentPage={this.state.currentPage}
-                  onGenreSelect={this.handleGenreChange}
-                  selectedGenre={this.state.selectedGenre}
-                  onSort={this.handleSort}
-                  sortColumn={this.state.sortColumn}
-                  {...props}
-                />
-              )}
-            />
-            <Redirect to="/not-found" />
-          </Switch>
-        </div>
-      </main>
+        <main className="container">
+          <div className="content">
+            <Switch>
+              <Route
+                path="/movies"
+                render={(props) => (
+                  <Movies
+                    movies={this.state.movies}
+                    genres={this.state.genres}
+                    onLike={this.handleLike}
+                    onDelete={this.handleDelete}
+                    pageSize={this.state.pageSize}
+                    onPageChange={this.handlePageChange}
+                    currentPage={this.state.currentPage}
+                    onGenreSelect={this.handleGenreChange}
+                    selectedGenre={this.state.selectedGenre}
+                    onSort={this.handleSort}
+                    sortColumn={this.state.sortColumn}
+                    {...props}
+                  />
+                )}
+              />
+              <Route path="/customers" component={Customers} />
+              <Route path="/rentals" component={Rentals} />
+              <Route path="/not-found" component={NotFound} />
+              <Redirect from="/" exact to="/movies" />
+              <Redirect to="/not-found" />
+            </Switch>
+          </div>
+        </main>
+      </>
     );
   }
 }

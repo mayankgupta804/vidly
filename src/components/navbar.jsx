@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = (props) => {
   const items = props.menuItems;
@@ -10,28 +10,14 @@ const Navbar = (props) => {
         Vidly
       </Link>
       <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav">
-          {items.map((item) => (
-            <li className={getNavItemClasses}>
-              <Link className="nav-link" to={item.path}>
-                {item.name}
-                <span className="sr-only">(current)</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {items.map((item) => (
+          <NavLink className="nav-link" to={item.path}>
+            {item.name}
+          </NavLink>
+        ))}
       </div>
     </nav>
   );
 };
-
-function getNavItemClasses(item) {
-  const currentPath = window.location.pathname;
-  let classes = "nav-item";
-  if (item.path === currentPath) {
-    classes += " active";
-  }
-  return classes;
-}
 
 export default Navbar;
