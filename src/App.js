@@ -4,6 +4,7 @@ import { getMovies } from "./services/fakeMovieService";
 import { getGenres } from "./services/fakeGenreService";
 import Movies from "./components/movies";
 import Navbar from "./components/navbar";
+import MovieForm from "./components/movieForm";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Customers from "./components/customers";
 import Rentals from "./components/rentals";
@@ -60,6 +61,7 @@ class App extends Component {
         <main className="container">
           <div className="content">
             <Switch>
+              <Route path="/movies/:id" component={MovieForm} />
               <Route
                 path="/movies"
                 render={(props) => (
