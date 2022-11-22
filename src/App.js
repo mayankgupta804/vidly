@@ -3,6 +3,11 @@ import React, { Component } from "react";
 import { getMovies } from "./services/fakeMovieService";
 import { getGenres } from "./services/fakeGenreService";
 import Movies from "./components/movies";
+import Navbar from "./components/navbar";
+import { Route, Switch, Redirect } from "react-router-dom";
+import Customers from "./components/customers";
+import Rentals from "./components/rentals";
+import NotFound from "./components/notFound";
 
 class App extends Component {
   state = {
@@ -44,21 +49,43 @@ class App extends Component {
   };
 
   render() {
+    const menuItems = [
+      { name: "Movies", path: "/movies" },
+      { name: "Rentals", path: "/rentals" },
+      { name: "Customers", path: "/customers" },
+    ];
     return (
       <main className="container">
-        <Movies
-          movies={this.state.movies}
-          genres={this.state.genres}
-          onLike={this.handleLike}
-          onDelete={this.handleDelete}
-          pageSize={this.state.pageSize}
-          onPageChange={this.handlePageChange}
-          currentPage={this.state.currentPage}
-          onGenreSelect={this.handleGenreChange}
-          selectedGenre={this.state.selectedGenre}
-          onSort={this.handleSort}
-          sortColumn={this.state.sortColumn}
-        />
+        <Navbar menuItems={menuItems} />
+        <div className="content">
+          <Switch>
+            <Redirect from="/movies" to="/" />
+            <Route path="/customers" component={Customers} />
+            <Route path="/rentals" component={Rentals} />
+            <Route path="/not-found" component={NotFound} />
+            <Route
+              exact
+              path="/"
+              render={(props) => (
+                <Movies
+                  movies={this.state.movies}
+                  genres={this.state.genres}
+                  onLike={this.handleLike}
+                  onDelete={this.handleDelete}
+                  pageSize={this.state.pageSize}
+                  onPageChange={this.handlePageChange}
+                  currentPage={this.state.currentPage}
+                  onGenreSelect={this.handleGenreChange}
+                  selectedGenre={this.state.selectedGenre}
+                  onSort={this.handleSort}
+                  sortColumn={this.state.sortColumn}
+                  {...props}
+                />
+              )}
+            />
+            <Redirect to="/not-found" />
+          </Switch>
+        </div>
       </main>
     );
   }
