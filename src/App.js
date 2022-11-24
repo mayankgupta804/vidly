@@ -5,6 +5,7 @@ import { getGenres } from "./services/fakeGenreService";
 import Movies from "./components/movies";
 import Navbar from "./components/navbar";
 import MovieForm from "./components/movieForm";
+import LoginForm from "./components/loginForm";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Customers from "./components/customers";
 import Rentals from "./components/rentals";
@@ -54,6 +55,7 @@ class App extends Component {
       { name: "Movies", path: "/movies" },
       { name: "Rentals", path: "/rentals" },
       { name: "Customers", path: "/customers" },
+      { name: "Login", path: "/login" },
     ];
     return (
       <>
@@ -62,6 +64,7 @@ class App extends Component {
           <div className="content">
             <Switch>
               <Route path="/movies/:id" component={MovieForm} />
+              <Route path="/login" component={LoginForm} />
               <Route
                 path="/movies"
                 render={(props) => (
