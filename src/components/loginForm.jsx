@@ -1,25 +1,57 @@
 import React, { Component } from "react";
 
 class LoginForm extends Component {
-    handleSubmit = e => {
-        e.preventDefault()
+  state = {
+    account: {
+      username: "",
+      password: "",
+    },
+  };
 
-        // redirect
-        console.log("Submitted");
-    }
-  
-    render() {
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log("Submitted");
+  };
+
+  handleChange = ({currentTarget: input}) => {
+    const account = {
+      ...this.state.account,
+    };
+    account[input.name] = input.value;
+    this.setState({ account });
+  };
+
+  render() {
+
+    const { account } = this.state;
+
     return (
       <div>
         <h1>Login</h1>
         <form onSubmit={this.handleSubmit} action="">
           <div className="form-group">
             <label htmlFor="username">Username</label>
-            <input id="username" type="text" className="form-control" />
+            <input
+              autoFocus
+              onChange={this.handleChange}
+              id="username"
+              name="username"
+              type="text"
+              value={account.username}
+              className="form-control"
+            />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input id="password" type="text" className="form-control" />
+            <input
+              id="password"
+              name="password"
+              type="text"
+              value={account.password}
+              onChange={this.handleChange}
+              className="form-control"
+            />
           </div>
           <div>
             <button className="btn btn-primary">Login</button>
