@@ -43,7 +43,7 @@ class Form extends Component {
       ...this.state.data,
     };
     data[input.name] = input.value;
-    this.setState({ data });
+    this.setState({ data, errors });
   };
 
   renderButton(label) {
