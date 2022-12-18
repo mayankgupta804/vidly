@@ -10,6 +10,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Customers from "./components/customers";
 import Rentals from "./components/rentals";
 import NotFound from "./components/notFound";
+import RegisterForm from "./components/registerForm";
 
 class App extends Component {
   state = {
@@ -56,6 +57,7 @@ class App extends Component {
       { name: "Rentals", path: "/rentals" },
       { name: "Customers", path: "/customers" },
       { name: "Login", path: "/login" },
+      { name: "Register", path: "/register" },
     ];
     return (
       <>
@@ -65,6 +67,7 @@ class App extends Component {
             <Switch>
               <Route path="/movies/:id" component={MovieForm} />
               <Route path="/login" component={LoginForm} />
+              <Route path="/register" component={RegisterForm} />
               <Route
                 path="/movies"
                 render={(props) => (
