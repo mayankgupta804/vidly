@@ -3,6 +3,7 @@ import Pagination from "./common/pagination";
 import ListGroup from "./common/listgroup";
 import { paginate } from "../utils/paginate";
 import MoviesTable from "./moviesTable";
+import { withRouter } from "react-router-dom";
 import _ from "lodash";
 
 class Movies extends Component {
@@ -50,6 +51,11 @@ class Movies extends Component {
       pageSize
     );
 
+    const routeChange = () => {
+      const path = "/movies/new";
+      this.props.history.push(path);
+    };
+
     return (
       <div className="row">
         <div className="col-3">
@@ -60,6 +66,13 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
+          <button
+            onClick={routeChange}
+            type="button"
+            className="btn btn-primary"
+          >
+            New Movie
+          </button>
           {count === 0 ? (
             <p>There are no movies in the database.</p>
           ) : (
@@ -86,4 +99,4 @@ class Movies extends Component {
   }
 }
 
-export default Movies;
+export default withRouter(Movies);
