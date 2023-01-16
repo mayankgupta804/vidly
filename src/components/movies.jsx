@@ -5,6 +5,7 @@ import { paginate } from "../utils/paginate";
 import MoviesTable from "./moviesTable";
 import { withRouter } from "react-router-dom";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 class Movies extends Component {
   getPagedData = () => {
@@ -51,11 +52,6 @@ class Movies extends Component {
       pageSize
     );
 
-    const routeChange = () => {
-      const path = "/movies/new";
-      this.props.history.push(path);
-    };
-
     return (
       <div className="row">
         <div className="col-3">
@@ -66,13 +62,13 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <button
-            onClick={routeChange}
-            type="button"
+          <Link
+            to="/movies/new"
             className="btn btn-primary"
+            style={{ marginBottom: 20 }}
           >
             New Movie
-          </button>
+          </Link>
           {count === 0 ? (
             <p>There are no movies in the database.</p>
           ) : (
